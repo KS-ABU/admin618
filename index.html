@@ -1,1 +1,557 @@
 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 | 专业Web开发者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a6cf7;
+            --secondary: #6f42c1;
+            --dark: #1d2144;
+            --light: #f8f9fa;
+            --gray: #ededed;
+            --text: #333333;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* 主区域样式 */
+        .hero {
+            padding: 150px 0 100px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .highlight {
+            color: var(--primary);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        /* 部分通用样式 */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 关于我部分 */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        /* 技能部分 */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .skill {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .skill:hover {
+            transform: translateY(-10px);
+        }
+        
+        .skill i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .skill h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* 项目部分 */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* 联系部分 */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .contact-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            字体大小: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        页脚 {
+            背景: var(--黑暗);
+            颜色: 白色的;
+            填充: 50px 0 20px;
+            文本对齐: 中心;
+        }
+        
+        .社交链接 {
+            显示: 弯曲;
+            justify-content: 中心;
+            差距: 20px;
+            底边距: 30px;
+        }
+        
+        .社交链接 a {
+            宽度: 40px;
+            高度: 40px;
+            背景: RGBA(255, 255, 255, 0.1);
+            边界半径: 50%;
+            显示: 弯曲;
+            对齐项目: 中心;
+            justify-content: 中心;
+            颜色: 白色的;
+            文字装饰: 没有一个;
+            过渡: 所有 0.3s;
+        }
+        
+        .社交链接 a:盘旋 {
+            背景: var(--主);
+            改变: translateY(-5PX);
+        }
+        
+        .版权 {
+            上边距: 20PX;
+            顶部衬垫: 20PX;
+            上边框: 1px 固体 RGBA(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @介质 (最大宽度: 768px) {
+            .英雄, .关于内容 {
+                挠曲方向: 柱;
+                文本对齐: 中心;
+            }
+            
+            .英雄 {
+                填充: 120PX 0 50PX;
+            }
+            
+            H1 {
+                字体大小: 2.5REM;
+            }
+            
+            .导航链接 {
+                显示: 没有一个;
+            }
+        }
+</风格>
+</头>
+<身体>
+<!-- 导航栏 -->
+<页眉>
+<div class="容器">
+            <NAV>
+                <div class="徽标">johndoe</div>
+                <UL class="导航链接">
+                    <锂><a href="#home">首页</a></锂>
+                    <锂><a href="#关于">关于我</a></锂>
+                    <锂><a href="#技能">技能</a></li>
+                    <li><a href="项目数">项目</a></li>
+                    <li><a href="#联系人">联系我</a></li>
+                </UL>
+            </NAV>
+</div>
+</页眉>
+
+<!-- 主区域 -->
+<section id="主页">
+<div class="容器英雄">
+            <div class="英雄内容">
+                <H1>你好，我是<跨度 class="突出显示">无名氏</跨度></H1>
+                <p>一名全栈开发者和UI/UX设计爱好者，拥有5年以上的行业经验，专注于创建美观且功能强大的Web应用.</p>
+                <a href="#联系人" class="btn">联系我</a>
+            </div>
+            <div class="英雄形象">
+                <IMG src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&Ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&自动=格式&fit=裁剪&W=774&Q=80" alt="个人照片">
+            </div>
+</div>
+</section>
+
+<!-- 关于我 -->
+<section 身份标识="关于">
+<div class="容器">
+            <div class="节标题">
+                <H2>关于我</h2>
+                <p>了解更多关于我的背景和经历</p>
+</div>
+<div class="关于内容">
+                <div class="关于文本">
+                    <p>我是一名充满激情的全栈开发者，擅长使用现代Web技术构建出色的用户体验.我的职业生涯始于2018年，当时我毕业于清华大学计算机科学专业。</p>
+                    <p>在过去的5年中，我曾与多家创业公司和科技公司合作，参与了各种Web和移动应用项目的开发.我热爱学习新技术，并喜欢挑战复杂的编程问题。</p>
+                    <p>当我不编码的时候，我喜欢阅读科技博客、摄影和旅行。 我相信平衡的工作与生活是保持创造力的关键。</p>
+</div>
+<div class="关于图像">
+                    <IMG src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&Ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&自动=格式&fit=裁剪&W=871&Q=80" alt="工作照片">
+</div>
+</div>
+</div>
+</部分>
+
+<!-- 技能 -->
+<section 身份标识="技能" 风格="背景色：var(--灰色)；">
+<div class="容器">
+<div class="节标题">
+                <H2>我的技能</H2>
+                <p>我在多个技术领域拥有专业知识和经验</p>
+</div>
+<div class="技能容器">
+                <div class="技能">
+                    <i class="fas fa-code"></i>
+                    <h3>前端开发</h3>
+                    <p>HTML、CSS、JavaScript、React、Vue.JS、角度</p>
+</div>
+                <div class="技能">
+                    <i class="fas fa服务器"></i>
+                    <h3>后端开发</h3>
+                    <p>Node.JS、Python、PHP、Ruby 在……之上 rails、MySQL、MongoDB</p>
+                </div>
+                <div class="技能">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>移动开发</h3>
+                    <p>响应本机、flutter、iOS、Android</p>
+                </div>
+                <div class="技能">
+                    <i class="fas fa油漆刷"></i>
+<h3>用户界面/UX设计</h3>
+<p>Figma、Adobe XD、草图，原型设计，用户研究</p>
+</div>
+</div>
+</div>
+</部分>
+
+<!-- 项目 -->
+<部分 身份标识="项目">
+<div 班级="容器">
+<div 班级="节标题">
+<H2>我的项目</H2>
+<p>以下是我最近完成的一些项目</p>
+</div>
+<div 班级="项目-容器">
+<div 班级="项目">
+<div 班级="项目映像">
+<IMG src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&Ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&自动=格式&fit=裁剪&W=872&Q=80" alt="项目1">
+</div>
+<div class="项目信息">
+<H3>电子商务平台</H3>
+<p>一个全功能的电子商务网站，具有支付集成、用户认证和产品管理功能。</p>
+</div>
+</div>
+<div class="项目">
+<div class="项目映像">
+<IMG src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&Ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&自动=格式&fit=裁剪&W=870&Q=80" alt="项目2">
+</div>
+                    <div class="项目信息">
+<H3>任务管理应用</H3>
+                        <p>一个直观的任务管理应用程序，帮助团队协作和跟踪项目进度。</p>
+</背景>
+</边界半径>
+<上边框 弯曲=PX>
+<窗体组 class="项目映像">
+<最小高度 src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&Ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=格式&fit=裁剪&W=774&Q=80" alt="项目3">
+</调整大小>
+<@介质 class=最大宽度>
+<英雄, .关于内容</h3>
+</* 页脚 */>柱</p>
+</文本对齐>
+</div></div>
+</div></div>
+</英雄></div>
+</填充></部分>
+
+<!-- 联系 --><!-- 联系 -->
+<部分 身份标识=部分风格=身份标识背景色="联系人"(--灰色)；">风格部分=风格=背景色var=var背景颜色：--灰色>；">
+<字体大小 班级=REM><div 班级="容器">
+<div 班级="节标题"><div 班级="节标题">
+<H2>联系我</H2><H2>联系我</H2>
+<导航链接>有兴趣合作吗？ 给我发消息吧！</p><p>有兴趣合作吗？ 给我发消息吧！</p>
+</显示></没有一个>
+<div 班级="contact-container"><div 班级="contact-container">
+<div 班级="联系人信息"><div 班级="联系人信息">
+<div 班级="联系人-项目"><div 班级="联系人-项目">
+<我 头="fas fa-信封"></我><我 班级="fas fa-信封"></我>
+<div><div>
+<<!-- 导航栏 -->>邮箱</H3><H3>邮箱</H3>
+<p>johndoe@example.com</p><p>johndoe@example.com</p>
+</对齐项目></div>
+</div></NAV>
+<div 班级="联系人-项目"><"徽标" 班级johndoe"联系人-项目">
+<我 UL="fas fa-phone"></"导航链接"><我 班级="fas fa-phone"></我>
+<div><锂>
+<H3>锂</H3><H3>电话</H3>
+<p>+861380013000</锂><p>+86 138 0013 8000</p>
+</div></div>
+</div></div>
+<div UL="联系人-项目"><div 班级="联系人-项目">
+<我 NAV="fas fa-map-marker-alt"></我><我 班级="fas fa-map-marker-alt"></我>
+<div><div>
+<H3>页眉</H3><H3>地址</H3>
+<p>北京市海淀区清华大学</p><p>北京市海淀区清华大学</p>
+<!-- 主区域 -->div></div>
+</div></div>
+</div></div>
+<形式 班级="联系人表单"><"英雄内容" 班级="联系人表单">"英雄内容" 班级="联系人表单">
+<div H1="窗体组"你好，我是div跨度="窗体组">div H1="窗体组"你好，我是div 跨度="窗体组">
+<标签 为="名称">姓名为标签></标签="名称"=>>姓名><标签标签 为="名称">姓名为标签></标签="名称"=>>姓名><标签
+<输入类型="文本"身份标识="名称"占位符="#联系人"必需的><输入 类型="文本" 身份标识="名称" 占位符="请输入您的姓名" 必需的>输入类型="文本"身份标识="名称"占位符="#联系人"必需的><输入 类型="文本" 身份标识="名称" 占位符="请输入您的姓名" 必需的>
+</div></div>
+<div班级="窗体组"><"英雄形象"div><班级="窗体组"><"英雄形象" 班级="窗体组">
+<标签 为="电子邮件">邮箱为标签></标签="电子邮件"=>>邮箱><标签
+<输入类型="电子邮件"身份标识="电子邮件"占位符="请输入您的邮箱"必需的必需的><输入 类型="电子邮件" 身份标识="电子邮件" 占位符="请输入您的邮箱" 必需的>输入 类型="电子邮件" 身份标识="电子邮件" 占位符="请输入您的邮箱" 必需的>
+</div></div>
+<div班级="窗体组"><div班级><"窗体组">div 班级="窗体组"><div 班级="窗体组">
+<标签 为="消息">消息为标签></标签="消息"=>>消息><标签标签 为="消息">消息为标签></标签="消息"=>>消息><标签
+<textarea身份标识="消息"=身份标识必填>占位符textarea>textarea占位符textarea=身份标识必填>身份标识必填 身份标识="消息"=身份标识必填>占位符textarea>textarea占位符textarea=身份标识必填>
+</div></div>
+<按钮<按钮类型="提交"=类型>="提交"按钮>班级按钮="BTN"=>发送消息"提交"发送消息按钮><发送消息按钮>=类型>="提交"按钮>班级按钮="BTN"=>发送消息</发送消息按钮><按钮>按钮<按钮类型="提交"=类型>="提交"按钮>班级按钮="BTN"=>发送消息"提交"发送消息按钮><发送消息按钮>=类型>="提交"按钮>班级按钮="BTN"=>发送消息</发送消息按钮><按钮>
+</形式></形式>形式></形式>
+</div></div>
+</div></div>
+</部分></部分>部分></部分>
+
+<!-- 页脚 --><!-- 页脚 -->
+<页脚><页脚>
+<div<div班级="容器"><div班级="容器">"容器"div班级="容器">div<div班级="容器"><div班级="容器">班级="容器">"容器"div班级="容器">
+<div<div班级="社交链接"><div班级="社交链接"><div班级="社交链接"><div<div班级="社交链接"><div班级="社交链接">班级="社交链接"><div 班级="社交链接">
+<一个<一个href=一个><我班级="Fab fa-Github"></我></一个></一个>=<一个</我href=</一个<我></个>href=一个><我班级="Fab fa-Github"></我></一个></一个></我href=>=<我href=>=<我href=</我href=</我></一个></一个<一个href=一个><我班级="Fab fa-Github"></我></一个></一个>=<一个</我href=</一个<我></个>href=一个><我 班级="fab fa-Github"></我></一个></一个/我href=>=<一个</我href=</一个<我></一个>
+<一个<一个href=一个><我班级="Fab fa-linkedin"></我></a></一个>=<一个</我href=</一个<i></个>href=一个><我班级="Fab fa-linkedin"></我></一个></一个></我href=>=<我href=>=<我href=</我href=</我></一个></一个<一个href=一个><我班级="Fab fa-linkedin"></我></a></一个>=<一个</我href=</一个<i></个>href=一个><我 班级="fab fa-linkedin"></我></一个></一个/我href=>=<一个</我href=</一个<我></一个>
+<一个<一个href=一个><我班级="Fab fa-Witter"></我></a></一个>=<一个</我href="fab fa-Witter"一个<i></个>href=一个>个我href=一个>班级="Fab fa-Witter"></我></一个></一个/我href=>=<一个</我href="fab fa-Witter"一个<我></一个>一个<一个href=一个><我班级="Fab fa-Witter"></我></a></一个>=<一个</我href="fab fa-Witter"一个<i></个>href=一个>个我href=一个>班级="Fab fa-Witter"></我></一个></一个/我href=>=<一个</我href="fab fa-Witter"一个<我></一个>
+<一个<一个href=一个><我班级="Fab fa-instagram"></我></a></一个>=<一个</我href=</一个<i></个>href=一个><我班级="Fab fa-instagram"></我></一个></一个></我href=>=<我href=>=<我href=</我href=</我></一个></一个<一个href=一个><我班级="Fab fa-instagram"></我></a></一个>=<一个</我href=</一个<i></个>href=一个><我 班级="fab fa-instagram"></我></一个></一个/我href=>=<一个</我href=</一个<我></一个>
+</div></div>
+<div<div班级="版权所有"><div班级="版权">班级="版权所有"><div班级="版权">div<div班级="版权所有"><div班级="版权">班级="版权所有"><div 班级="版权">
+<p><p>&copy；2023年，无名氏。保留所有权利。</p><p>&copy；2023年，无名氏。保留所有权利。</p></p><p>&copy；2023年，无名氏。保留所有权利。</p>p><p>&copy；2023年，无名氏。保留所有权利。</p><p>&copy；2023年，无名氏。保留所有权利。</p></p><p>&copy；2023年，无名氏。保留所有权利。</p>
+</div></div>
+</div></div>
+</页脚>
+</身体>
+</超文本标记语言>
